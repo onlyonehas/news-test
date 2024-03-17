@@ -1,9 +1,9 @@
-type Card = {
+export type CardTypes = {
   country: "UK" | "US" | "France" | "Australia" | "India";
   headlines: any;
 };
 
-export default function Card({ country, headlines }: Card) {
+export default function Card({ country, headlines }: CardTypes) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
       <div className="px-6 py-4">
