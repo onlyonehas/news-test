@@ -2,34 +2,40 @@ import Card from "@/components/Card";
 import Nav from "@/components/Nav";
 import "../app/globals.css";
 
-const countries = {
-  UK: {
-    code: "gb",
-  },
-  US: {
-    code: "us",
-  },
-  France: {
-    code: "fr",
-  },
-  Australia: {
-    code: "au",
-  },
-  India: {
-    code: "il",
-  },
-} as { [key: string]: any };
+interface Article {
+  title: string;
+  author: string;
+  source: string;
+  publishedAt: string;
+  url: string;
+}
 
-export default function Home({ countries }: any) {
+interface CountryType {
+  name: "UK" | "US" | "France" | "Australia" | "India";
+  code: string;
+  articles: Article;
+}
+
+interface HomeType {
+  countries: CountryType[];
+}
+export default function Home({ countries }: HomeType) {
+  const CountriesCard = () => {
+    return countries.map(
+      (country: { name: any; articles: any }, index: any) => {
+        const name = country?.name;
+        const articles = country?.articles;
+        const cardProps = { name, articles };
+        return <Card props={cardProps} key={index} />;
+      },
+    );
+  };
+
   return (
     <>
       <Nav />
-      <div className="flex flex-row justify-center pt-32">
-        <Card country="UK" headlines={"hi"} />
-        <Card country="US" headlines={"test"} />
-        <Card country="France" headlines={"test"} />
-        <Card country="Australia" headlines={"test"} />
-        <Card country="India" headlines={"test"} />
+      <div className="flex flex-row justify-center pt-14">
+        <CountriesCard />
       </div>
     </>
   );
@@ -37,12 +43,41 @@ export default function Home({ countries }: any) {
 
 export async function getStaticProps() {
   const apiKey = process.env.NEWSAPIKEY;
-  for (const country in countries) {
+  const countries = [
+    {
+      name: "UK",
+      code: "gb",
+      articles: {},
+    },
+    {
+      name: "US",
+      code: "us",
+      articles: {},
+    },
+    {
+      name: "France",
+      code: "fr",
+      articles: {},
+    },
+    {
+      name: "Australia",
+      code: "au",
+      articles: {},
+    },
+    {
+      name: "India",
+      code: "il",
+      articles: {},
+    },
+  ];
+
+  for await (const country of countries) {
     const res = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=${countries[country].code}&pageSize=5&apiKey=${apiKey}`,
+      `https://newsapi.org/v2/top-headlines?country=${country.code}&pageSize=5&apiKey=${apiKey}`,
     );
     const data = await res.json();
-    countries[country].articles = await data.articles;
+    const articles = await data?.articles;
+    country.articles = articles;
   }
 
   return {
