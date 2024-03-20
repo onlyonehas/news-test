@@ -1,10 +1,15 @@
-Test
+# News Api Test
 
-- Create a github repo with the
-- Develop a web app
+## Description
 
-Responsive web application that displays top 5 headlines
-from UK, US, France, Australia and India
+Responsive web application that displays,
+top 5 headlines from
+UK, US, France, Australia and India
 
 API:
 https://newsapi.org/docs/endpoints/top-headlines
+
+uses: `next.js`, `tailwind`
+
+Screenshot of Home Page:
+<img src="screenshot.png" alt="Home Page" width="500"/>
