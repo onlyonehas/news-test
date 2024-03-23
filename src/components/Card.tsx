@@ -1,20 +1,7 @@
-interface Article {
-  title: string;
-  author: string;
-  source: {
-    name: string;
-  };
-  publishedAt: string;
-  url: string;
-}
-
-export interface CountryType {
-  name: string;
-  articles: Article[];
-}
+import { Article, CardType } from "@/lib/sharedTypes";
 
 interface CardProps {
-  props: CountryType;
+  props: CardType;
 }
 
 export default function Card({ props }: CardProps): JSX.Element {
@@ -28,12 +15,10 @@ export default function Card({ props }: CardProps): JSX.Element {
             <p>
               {index + 1}.
               <span className="font-bold dark:text-blue ">
-                {" "}
                 <a href={article.url}>{article.title}</a>
               </span>
             </p>
             <p>
-              {" "}
               Source:
               <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
                 {article.source.name}
